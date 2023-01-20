@@ -3,9 +3,10 @@ const Data = require('./testPageData')
 
 const stockCloseNumbers = Data.map((data) => {return data.data.close}) // tick
 let percentageFromPreviouseDay = [] // tick
+const probabilityKeyValue = {}
 // const sortedPercentagefrompreviouseDay = percentageFromPreviouseDay.sort((a,b) => a-b) // tick
-const index = 1
-const probabilityPoints = []
+
+// const probabilityPoints = []
 
 
 const percetnageFromPreviouseday = () => {
@@ -14,7 +15,6 @@ const percetnageFromPreviouseday = () => {
         if(!stockCloseNumbers[index]){return console.log('no numbers in array left boo')}
         const answer = ((close - stockCloseNumbers[index]) * 100) / stockCloseNumbers[index]
         percentageFromPreviouseDay.push(answer)
-        // console.log(percentageFromPreviouseDay)
         index + 1 
     }
 }
@@ -22,25 +22,22 @@ const percetnageFromPreviouseday = () => {
 const sort = (numbers) => {
     const numberTimes100 = numbers.map((number) => number * 100000)
     numberTimes100.sort((a,b) => a-b)
-    // console.log(numberTimes100)
     return percentageFromPreviouseDay = numberTimes100.map((number) => number / 100000)
-    // console.log(numberTimes100.sort())
+}
+
+const porbabilityCalculator = () => {
+    let index = 1
+    for (dayClose of percentageFromPreviouseDay) {
+        const amountOfData = percentageFromPreviouseDay.length
+        let probabilty = index / amountOfData
+        probabilityKeyValue[dayClose] = probabilty
+        // probabilityPoints.push(probabilityKeyValue)
+        index += 1
+    }
 }
 
 percetnageFromPreviouseday()
 sort(percentageFromPreviouseDay)
-console.log(percentageFromPreviouseDay)
-// console.log(sortedPercentagefrompreviouseDay)
+porbabilityCalculator()
+console.log(probabilityKeyValue)
 
-
-const porbabilityCalculator = () => {
-    for (dayClose of sortedPercentagefrompreviouseDay) {
-        const probabilty = index / sortedPercentagefrompreviouseDay.length()
-        probabilityKeyValue = {}
-        probabilityKeyValue[dayclose, probabilty]
-            probabilityPoints.push(probabilityKeyValue)
-
-        index += 1
-            
-    }
-}
