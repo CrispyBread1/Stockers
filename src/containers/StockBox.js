@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import StockList from "../components/StockList";
 import SingleDetailedStock from "../components/SingleDetailedStock";
+import Data from "../testPageData";
 
 
 const StockBox = () => {
     
     const [stockList, setStockList] = useState([])
-    const [symbol, setSymbol] = useState('')
+    const [symbol, setSymbol] = useState('a')
     const [stockForDetail, setStockforDetail] = useState([])
 
     let url = 'https://api.stockdata.org/v1/data/quote?symbols=AAPL%2CTSLA%2CMSFT&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI'
     const moreDetailURL = `https://api.stockdata.org/v1/data/intraday?symbols=${symbol}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
     
-
+    const testData = Data
 
     const changeURL = (ticker) => {
         url = moreDetailURL
@@ -21,9 +22,9 @@ const StockBox = () => {
     }
 
 
-    useEffect(() => {
-        loadListOfStocks(url)
-    }, [])
+    // useEffect(() => {
+    //     loadListOfStocks(url)
+    // }, [])
 
     const loadListOfStocks = (url) => {
         fetch(url)
@@ -37,13 +38,13 @@ const StockBox = () => {
         .then(stock => setStockforDetail(stock.data))
     }
     
-    // console.log(stockList)
+    // console.log(testData)
     
     return (
        <>
         <h1>StockBox</h1>
         {!symbol && <StockList stockListProp={stockList} changeURL={changeURL}/>}
-        {symbol && <SingleDetailedStock stockDetailProp={stockForDetail}/>}
+        {symbol && <SingleDetailedStock stockDetailProp={stockForDetail} testData={testData}/>}
         </>
     )
 

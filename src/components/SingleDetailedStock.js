@@ -1,16 +1,17 @@
 import React from "react";
+import StockProbability from "./StockProbability";
 
 
-const SingleDetailedStock = ({stockDetailProp}) => {
+const SingleDetailedStock = ({stockDetailProp, testData}) => {
 
 
-    console.log(stockDetailProp)
+    // console.log(stockDetailProp)
 
 
     return(
         <>
-        <h1>This loads single stock details</h1>
-        <StockProbability stockListProp={stockDetailProp}/>
+        {/* <h1>This loads single stock details</h1> */}
+        <StockProbability stockListProp={stockDetailProp} testData={testData}/>
         </>
     )
 }
