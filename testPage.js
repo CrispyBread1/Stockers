@@ -1,12 +1,16 @@
 const Data = require('./testPageData')
 
 
+
 const stockCloseNumbers = Data.map((data) => {return data.data.close}) // tick
 let percentageFromPreviouseDay = [] // tick
 const probabilityKeyValue = {}
+const xCoords = []
+const yCoords = []
+const xyCoords = {}
 // const sortedPercentagefrompreviouseDay = percentageFromPreviouseDay.sort((a,b) => a-b) // tick
-
 // const probabilityPoints = []
+
 
 
 const percetnageFromPreviouseday = () => {
@@ -31,13 +35,16 @@ const porbabilityCalculator = () => {
         const amountOfData = percentageFromPreviouseDay.length
         let probabilty = index / amountOfData
         probabilityKeyValue[dayClose] = probabilty
-        // probabilityPoints.push(probabilityKeyValue)
+        xCoords.push(dayClose)
+        yCoords.push(probabilty)
         index += 1
     }
 }
 
+
+
 percetnageFromPreviouseday()
 sort(percentageFromPreviouseDay)
 porbabilityCalculator()
-console.log(probabilityKeyValue)
+console.log(xCoords, yCoords)
 
