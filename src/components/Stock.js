@@ -5,7 +5,7 @@ import React from "react";
 const Stock = ({stock, changeURL}) => {
     
     const moreDetail = () => {
-        changeURL(stock.ticker)
+        changeURL(stock, stock.ticker)
     }
     
     return(
@@ -15,6 +15,7 @@ const Stock = ({stock, changeURL}) => {
                 <p>Current price: {stock.price} <br/> 
                 Day change: {stock.day_change} <br/> 
                 Previouse day close: {stock.previous_close_price}</p>
+                <button onClick={moreDetail}>Click for more Detail</button>
                 
             </li>
         </>

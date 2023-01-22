@@ -1,16 +1,21 @@
 import React from "react";
-import StockProbability from "./StockProbability";
 
 
-const SingleDetailedStock = ({probabilityThatStockWillRiseOrFall}) => {
+
+const SingleDetailedStock = ({probabilityThatStockWillRiseOrFall, stockProp, lowestHighestClosing, returnToHome}) => {
 
 
-    
+    const returnToHomePage = () => {
+        returnToHome()
+    }
 
 
     return(
         <>
-            <h1>The probability of (this stock) falling to (this level) is: {probabilityThatStockWillRiseOrFall.Fall}%</h1>
+            <h2>Stock: {stockProp.name}</h2>
+            <h4>The probability of this falling up to {lowestHighestClosing.Lowest} is: {probabilityThatStockWillRiseOrFall.Fall}%</h4>
+            <h4>The probability of this rising up to {lowestHighestClosing.Highest} is: {probabilityThatStockWillRiseOrFall.Rise}%</h4>
+            <button onClick={returnToHomePage}>Return to Homepage</button>
         </>
     )
 }
