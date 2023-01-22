@@ -2,16 +2,15 @@ import React from "react";
 import StockProbability from "./StockProbability";
 
 
-const SingleDetailedStock = ({stockDetailProp, testData}) => {
+const SingleDetailedStock = ({probabilityThatStockWillRiseOrFall}) => {
 
 
-    // console.log(stockDetailProp)
+    
 
 
     return(
         <>
-        {/* <h1>This loads single stock details</h1> */}
-        <StockProbability stockListProp={stockDetailProp} testData={testData}/>
+            <h1>The probability of (this stock) falling to (this level) is: {probabilityThatStockWillRiseOrFall.Fall}%</h1>
         </>
     )
 }

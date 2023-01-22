@@ -1,23 +1,31 @@
 import React from "react";
-import C
+import SingleDetailedStock from "./SingleDetailedStock";
+// import { Chart } from "chart.js";
 
 
 const StockProbability = ({stockDetailProp, testData}) => {
 
         
-    const stockCloseNumbers = testData.map((data) => {return data.data.close}) // tick
+     // tick
+    
+    
     let percentageFromPreviouseDay = [] // tick
     const probabilityKeyValue = {}
     const xCoords = []
     const yCoords = []
+    const dataOfNumbersMinusPlus = {minus: 0, plus: 0}
+    const probabilityThatStockWillRiseOrFall = {Fall: 0, Rise: 0}
+
     
 
 
     const percetnageFromPreviouseday = () => {
-        for (const close of stockCloseNumbers) {
+        const stockDetailArray = testData.map((data) => {return data.data.close})
+        console.log(stockDetailArray)
+        for (const close of stockDetailArray) {
             let index = 1
-            if(!stockCloseNumbers[index]){return console.log('no numbers in array left boo')}
-            const answer = ((close - stockCloseNumbers[index]) * 100) / stockCloseNumbers[index]
+            if(!stockDetailArray[index]){return console.log('no numbers in array left boo')}
+            const answer = ((close - stockDetailArray[index]) * 100) / stockDetailArray[index]
             percentageFromPreviouseDay.push(answer)
             index += 1 
         }
@@ -41,32 +49,47 @@ const StockProbability = ({stockDetailProp, testData}) => {
         }
     }
 
-    const getProbability = () => {
-        percetnageFromPreviouseday()
-        sort(percentageFromPreviouseDay)
-        porbabilityCalculator()
-        // console.log(xCoords, yCoords)
-        
-        const dataChart = new Chart("myChart", {
-            type: "line",
-            data: {
-            labels: xCoords,
-            datasets: [{
-                backgroundColor: "rgba(0,0,0,1.0)",
-                borderColor: "rgba(0,0,0,0.1)",
-                data: yCoords
-            }]
-            },
-            options:{}
-        });
+    const sortIntoPorbabilityOfOutcome = (numbers) => {
+        const numberTimes100 = numbers.map((number) => number * 100000)
+        numberTimes100.sort((a,b) => a-b)
+        for(let number1000 of numberTimes100) {
+            if(number1000 <= 0) {dataOfNumbersMinusPlus.minus += 1
+                }else {dataOfNumbersMinusPlus.plus += 1}
+        }
+        return dataOfNumbersMinusPlus
+        // console.log(overallProbability)
     }
 
+    const getProbabilityThatStockWillRiseOrFall = () => {
+        probabilityThatStockWillRiseOrFall.Fall = (dataOfNumbersMinusPlus.minus / percentageFromPreviouseDay.length) * 100
+        probabilityThatStockWillRiseOrFall.Rise = (dataOfNumbersMinusPlus.plus / percentageFromPreviouseDay.length) * 100
+        return probabilityThatStockWillRiseOrFall
 
+    }
+
+    const getProbability = () => {
+        // setTimeout(() => {}, 100000)
+        percetnageFromPreviouseday()
+        // sort(percentageFromPreviouseDay)
+        porbabilityCalculator()
+        sortIntoPorbabilityOfOutcome(percentageFromPreviouseDay)
+        getProbabilityThatStockWillRiseOrFall()
+        // return <SingleDetailedStock probabilityThatStockWillRiseOrFall={probabilityThatStockWillRiseOrFall}/>
+        // console.log(probabilityThatStockWillRiseOrFall)
+    }
+    
+    
+    // console.log(probabilityThatStockWillRiseOrFall)
+    getProbability()
+
+    // console.log(xCoords, yCoords)
     return(
         <>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <h1 onClick={getProbability}>Hell YEA THIS WORKS WOOOOO</h1>
-        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        <h1 >Hell YEA THIS WORKS WOOOOO</h1>
+        {/* {getProbability} */}
+        <p>The probability of (this stock) falling to (this level) is: {probabilityThatStockWillRiseOrFall.Fall}%</p>
+        {/* <canvas id="myChart" width='100%' max-width= '700px'></canvas> */}
+        
         </>
     )
 

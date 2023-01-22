@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import StockList from "../components/StockList";
-import SingleDetailedStock from "../components/SingleDetailedStock";
+
 import Data from "../testPageData";
+import StockProbability from "../components/StockProbability";
 
 
 const StockBox = () => {
     
     const [stockList, setStockList] = useState([])
-    const [symbol, setSymbol] = useState('a')
-    const [stockForDetail, setStockforDetail] = useState([])
+    const [symbol, setSymbol] = useState('mm')
+    const [stockForDetail, setStockforDetail] = useState('')
 
     let url = 'https://api.stockdata.org/v1/data/quote?symbols=AAPL%2CTSLA%2CMSFT&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI'
-    const moreDetailURL = `https://api.stockdata.org/v1/data/intraday?symbols=${symbol}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
+    const moreDetailURL = `https://api.stockdata.org/v1/data/intraday?symbols=AAPL&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
     
     const testData = Data
 
@@ -24,6 +25,7 @@ const StockBox = () => {
 
     // useEffect(() => {
     //     loadListOfStocks(url)
+    //     loadMoreDetailStock(moreDetailURL)
     // }, [])
 
     const loadListOfStocks = (url) => {
@@ -34,9 +36,11 @@ const StockBox = () => {
 
     const loadMoreDetailStock = (url) => {
         fetch(url)
-        .then(res => res.join())
+        .then(res => res.json())
         .then(stock => setStockforDetail(stock.data))
+        
     }
+    // console.log(stockForDetail)
     
     // console.log(testData)
     
@@ -44,7 +48,7 @@ const StockBox = () => {
        <>
         <h1>StockBox</h1>
         {!symbol && <StockList stockListProp={stockList} changeURL={changeURL}/>}
-        {symbol && <SingleDetailedStock stockDetailProp={stockForDetail} testData={testData}/>}
+        {symbol && <StockProbability stockDetailProp={stockForDetail} testData={testData}/>}
         </>
     )
 
