@@ -4,10 +4,14 @@ import React from "react";
 
 const Stock = ({stock, changeURL}) => {
     
+
+    
     const moreDetail = () => {
         changeURL(stock, stock.ticker)
     }
     
+
+
     return(
         <>
             <li>

@@ -6,10 +6,9 @@ import SingleDetailedStock from "./SingleDetailedStock";
 const StockProbability = ({stockDetailProp, stockProp, testData, returnToHome}) => {
 
         
-     // tick
-    const stockData = stockDetailProp
     
-    let percentageFromPreviouseDay = [] // tick
+    const stockData = stockDetailProp
+    let percentageFromPreviouseDay = [] 
     const probabilityKeyValue = {}
     const xCoords = []
     const yCoords = []
@@ -19,10 +18,8 @@ const StockProbability = ({stockDetailProp, stockProp, testData, returnToHome}) 
 
     
 
-
     const percetnageFromPreviouseday = () => {
         const stockDetailArray = stockData.map((data) => {return data.data.close})
-        // console.log(stockDetailArray)
         for (const close of stockDetailArray) {
             let index = 1
             if(!stockDetailArray[index]){return console.log('no numbers in array left boo')}
@@ -43,9 +40,6 @@ const StockProbability = ({stockDetailProp, stockProp, testData, returnToHome}) 
         stockCloseDifference.sort((a,b) => a-b)
         lowestHighestClosing.Lowest = stockCloseDifference[0]
         lowestHighestClosing.Highest = stockCloseDifference[stockCloseDifference.length -2]
-        // console.log(stockCloseDifference)
-        // console.log(lowestHighestClosing)
-        
     }
 
     const porbabilityCalculator = () => {
@@ -68,7 +62,6 @@ const StockProbability = ({stockDetailProp, stockProp, testData, returnToHome}) 
                 }else {dataOfNumbersMinusPlus.plus += 1}
         }
         return dataOfNumbersMinusPlus
-        // console.log(overallProbability)
     }
 
     const getProbabilityThatStockWillRiseOrFall = () => {
@@ -85,36 +78,29 @@ const StockProbability = ({stockDetailProp, stockProp, testData, returnToHome}) 
         getProbabilityThatStockWillRiseOrFall()
         sortIntoLowestHighest(stockData)
         return probabilityThatStockWillRiseOrFall
-
         // setTimeout(() => {}, 100000)
         // sort(percentageFromPreviouseDay)
         // return <SingleDetailedStock probabilityThatStockWillRiseOrFall={probabilityThatStockWillRiseOrFall}/>
         // console.log(probabilityThatStockWillRiseOrFall)
     }
     
-    
-    // console.log(probabilityThatStockWillRiseOrFall)
+
+
     getProbability()
-    // console.log(lowestHighestClosing)
-    // console.log(probabilityThatStockWillRiseOrFall)
-    // console.log(dataOfNumbersMinusPlus)
-    // console.log(percentageFromPreviouseDay)
-    // console.log(xCoords, yCoords)
+    
+
+
     return(
         <>
-        {/* <h1 >Hell YEA THIS WORKS WOOOOO</h1> */}
         <h1>Stock's Future!!</h1>
         <SingleDetailedStock 
         probabilityThatStockWillRiseOrFall = {probabilityThatStockWillRiseOrFall} 
         stockProp = {stockProp}
         lowestHighestClosing = {lowestHighestClosing}
-        returnToHome = {returnToHome}
-        />
-        {/* <p>The probability of (this stock) falling to (this level) is: {probabilityThatStockWillRiseOrFall.Fall}%</p> */}
-        {/* <canvas id="myChart" width='100%' max-width= '700px'></canvas> */}
-        
+        returnToHome = {returnToHome} />
         </>
     )
+
 
 
 }

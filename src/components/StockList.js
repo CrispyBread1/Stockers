@@ -3,12 +3,10 @@ import Stock from "./Stock";
 
 
 const StockList = ({stockListProp, changeURL}) => {
-    
-    // console.log(stockListProp)
 
     // const stockArray = stockListProp.data
 
-    // console.log(stockArray)
+    
 
     const listOfStocks = stockListProp.map((stock, index) => {
         
@@ -16,6 +14,8 @@ const StockList = ({stockListProp, changeURL}) => {
             <Stock stock={stock} key={index} changeURL={changeURL}/>
         )
     })
+
+    
     
     return(
         <ol>
