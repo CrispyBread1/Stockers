@@ -1,5 +1,6 @@
 import React from "react";
 import Stock from "./Stock";
+import './stockList_style.css';
 
 
 const StockList = ({stockListProp, changeURL}) => {
@@ -18,7 +19,7 @@ const StockList = ({stockListProp, changeURL}) => {
     
     
     return(
-        <ol>
+        <ol id="list-of-stocks">
             <h2>Stock List</h2>
             {listOfStocks}
         </ol>

@@ -1,0 +1,11 @@
+#stock {
+    background-color: #dbffe5;
+    border-style: double;
+    border-color: green;
+    width: 40%;
+    text-align: center;
+}
+
+#stock-title {
+    text-align: center;
+}
