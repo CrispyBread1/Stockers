@@ -9,40 +9,51 @@ const StockBox = () => {
     
     const [stockList, setStockList] = useState([])
     const [stockProp, setStockProp] = useState('')
-    const [stockForDetail, setStockforDetail] = useState([])
-    const [ticker, setTicker] = useState('TSLA')
+    const [stockForDetail, setStockforDetail] = useState({})
+    const [tickerArray, setTickerArray] = useState([])
 
 
 
     let url = 'https://api.stockdata.org/v1/data/quote?symbols=AAPL,TSLA,MSFT&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI'
     
-    const MoreDetailURLs= `https://api.stockdata.org/v1/data/intraday?symbols=${ticker}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
+    
     const testData = Data
 
 
 
     const changeURL = (stockProp, ticker) => {
         setStockProp(stockProp)
-        setTicker(ticker)
-        loadMoreDetailStock(MoreDetailURLs)
-        // url = moreDetailURL
+        loadMoreDetailStock()
     }
 
     useEffect(() => {
         loadListOfStocks(url)
-        loadMoreDetailStock(MoreDetailURLs[ticker])
+        
+        
     }, [])
 
     const loadListOfStocks = (url) => {
         fetch(url)
         .then(res => res.json())
         .then(stocksList => setStockList(stocksList.data))
+        const tickers = stockList.map((stockObject) => stockObject.ticker)
+        loadMoreDetailStock(tickers)
+        return 
     }
 
-    const loadMoreDetailStock = (url) => {
-        fetch(url)
-        .then(res => res.json())
-        .then(stock => setStockforDetail(stock.data))
+    const loadMoreDetailStock = (tickerArray) => {
+
+        for (const id of tickerArray) {
+            const MoreDetailURLs = `https://api.stockdata.org/v1/data/intraday?symbols=${id}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
+            fetch(MoreDetailURLs)
+            .then(res => res.json())
+            .then(res => console.log(res.data))
+                // .then(stock => setStockforDetail(...stockForDetail, stock))
+                // console.log(stockForDetail)
+        }
+        
+        console.log(stockForDetail)
+        
         
     }
 
