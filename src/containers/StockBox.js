@@ -9,7 +9,7 @@ const StockBox = () => {
     
     const [stockList, setStockList] = useState([])
     const [stockProp, setStockProp] = useState('')
-    const [stockForDetail, setStockforDetail] = useState({})
+    const [stockForDetail, setStockforDetail] = useState([])
     const [tickerArray, setTickerArray] = useState([])
 
 
@@ -29,30 +29,41 @@ const StockBox = () => {
     useEffect(() => {
         loadListOfStocks(url)
         
-        
     }, [])
+
+    useEffect(() => {
+        setTickerArray(stockList.map((stockObject) => stockObject.ticker))
+    }, [stockList])
+
+    useEffect(() => {
+        loadMoreDetailStock()
+    }, [tickerArray])
 
     const loadListOfStocks = (url) => {
         fetch(url)
         .then(res => res.json())
         .then(stocksList => setStockList(stocksList.data))
-        const tickers = stockList.map((stockObject) => stockObject.ticker)
-        loadMoreDetailStock(tickers)
-        return 
     }
 
-    const loadMoreDetailStock = (tickerArray) => {
-
-        for (const id of tickerArray) {
-            const MoreDetailURLs = `https://api.stockdata.org/v1/data/intraday?symbols=${id}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
-            fetch(MoreDetailURLs)
+    const getTheMoreDetailData = (moreDetURL, name) => {
+        fetch(moreDetURL)
             .then(res => res.json())
-            .then(res => console.log(res.data))
-                // .then(stock => setStockforDetail(...stockForDetail, stock))
-                // console.log(stockForDetail)
+            .then(res => {
+                setStockforDetail([...stockForDetail, {[name]: res.data}])
+            })
+            .catch((error) => {
+                console.error(`Failed to fetch: ${error}`)
+            });
+    }
+
+    const loadMoreDetailStock = () => {
+        for (const id of tickerArray) {
+            const moreDetailedURL = `https://api.stockdata.org/v1/data/intraday?symbols=${id}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
+            getTheMoreDetailData(moreDetailedURL, id)
         }
-        
         console.log(stockForDetail)
+        
+    
         
         
     }
