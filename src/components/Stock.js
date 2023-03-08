@@ -3,14 +3,15 @@ import './stock_style.css';
 
 
 
-const Stock = ({stock, changeURL}) => {
+const Stock = ({stock, getTheMoreDetailData }) => {
     
-
+    // const stockLength = 
     
     const moreDetail = () => {
-        changeURL(stock, stock.ticker)
+        getTheMoreDetailData(stock.ticker)
     }
     
+    // console.log(stockDetail)
 
 
     return(
@@ -20,6 +21,7 @@ const Stock = ({stock, changeURL}) => {
                 <p>Current price: {stock.price} <br/> 
                 Day change: {stock.day_change} <br/> 
                 Previouse day close: {stock.previous_close_price}</p>
+                {/* <p>{stockDetail}</p> */}
                 <button onClick={moreDetail}>Click for more Detail</button>
             </li>
         </>

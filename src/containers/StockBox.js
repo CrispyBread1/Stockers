@@ -10,34 +10,19 @@ const StockBox = () => {
     const [stockList, setStockList] = useState([])
     const [stockProp, setStockProp] = useState('')
     const [stockForDetail, setStockforDetail] = useState([])
-    const [tickerArray, setTickerArray] = useState([])
-
+    const [stockBeingAnalysed, setStockBeingAnalysed] = useState([])
+   
 
 
     let url = 'https://api.stockdata.org/v1/data/quote?symbols=AAPL,TSLA,MSFT&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI'
     
-    
     const testData = Data
-
-
-
-    const changeURL = (stockProp, ticker) => {
-        setStockProp(stockProp)
-        loadMoreDetailStock()
-    }
 
     useEffect(() => {
         loadListOfStocks(url)
-        
     }, [])
 
-    useEffect(() => {
-        setTickerArray(stockList.map((stockObject) => stockObject.ticker))
-    }, [stockList])
 
-    useEffect(() => {
-        loadMoreDetailStock()
-    }, [tickerArray])
 
     const loadListOfStocks = (url) => {
         fetch(url)
@@ -45,39 +30,24 @@ const StockBox = () => {
         .then(stocksList => setStockList(stocksList.data))
     }
 
-    const getTheMoreDetailData = (moreDetURL, name) => {
-        fetch(moreDetURL)
+    const getTheMoreDetailData = (name) => {
+        const moreDetailedURL = `https://api.stockdata.org/v1/data/intraday?symbols=${name}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
+        fetch(moreDetailedURL)
             .then(res => res.json())
-            .then(res => {
-                setStockforDetail([...stockForDetail, {[name]: res.data}])
-            })
+            .then(res => setStockforDetail(res.data))
             .catch((error) => {
                 console.error(`Failed to fetch: ${error}`)
             });
-    }
-
-    const loadMoreDetailStock = () => {
-        for (const id of tickerArray) {
-            const moreDetailedURL = `https://api.stockdata.org/v1/data/intraday?symbols=${id}&api_token=f6MJlmpUiiaFPzcSztsLRU6LqpUc27hZCwNHDNMI`
-            getTheMoreDetailData(moreDetailedURL, id)
-        }
-        console.log(stockForDetail)
-        
-    
-        
-        
+            setStockProp(name)
     }
 
     const returnToHome = () => {
         setStockProp('')
     }
-
-
     
     return (
        <>
-        {/* <h1>StockBox</h1> */}
-        {!stockProp && <StockList stockListProp={stockList} changeURL={changeURL}/>}
+        {!stockProp && <StockList stockListProp={stockList} getTheMoreDetailData={getTheMoreDetailData}/>}
         {stockProp && <StockProbability stockDetailProp={stockForDetail} testData={testData} stockProp={stockProp} returnToHome={returnToHome}/>}
         </>
     )

@@ -3,7 +3,7 @@ import Stock from "./Stock";
 import './stockList_style.css';
 
 
-const StockList = ({stockListProp, changeURL}) => {
+const StockList = ({stockListProp, changeURL, getTheMoreDetailData}) => {
 
     // const stockArray = stockListProp.data
 
@@ -12,7 +12,7 @@ const StockList = ({stockListProp, changeURL}) => {
     const listOfStocks = stockListProp.map((stock, index) => {
         
         return(
-            <Stock stock={stock} key={index} changeURL={changeURL}/>
+            <Stock stock={stock} key={index} getTheMoreDetailData={getTheMoreDetailData}/>
         )
     })
 
